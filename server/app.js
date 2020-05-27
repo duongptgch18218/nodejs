@@ -1,20 +1,33 @@
 var http = require('http');
+let fs = require('fs');
 var server = http.createServer((req, res) => {
-    if(req.url == '/'){
-
-        res.writeHead(200, {'Content-type': 'text/html'});
-
-        res.write('<html><body><p>This is home Page.</p></body></html>');
-        res.end();
+    if(req.url == '/login'){
+        fs.readFile("./templates/login.html", null, (err, data) => {
+            if (err){
+                res.writeHead(404);
+                res.write("Opoos, file not found");
+                res.end();
+            }
+            res.writeHead(200, {'Content-type': 'text/html'});
+            res.write(data);
+            res.end();
+        });
     }
-    else if (req.url == '/second'){
-        res.writeHead(200, {'Content-type': 'text/html'});
-
-        res.write('<html><body><p>This is second Page.</p></body></html>');
-        res.end();
+    else if (req.url == '/student'){
+        fs.readFile('./templates/index.html', null, (err, data) => {
+            if (err){
+                res.writeHead(404);
+                res.write("Opoos, file not found");
+                res.end();
+            }
+            res.writeHead(200, {'Content-type':'text/html'});
+            res.write(data);
+            res.end();
+        });
+       
     }
     else if(req.url == '/third') {
-        res.writeHead(200, {'Content-type': 'text/html'});
+        res.writeHead(200, {'Content-type': 'application/json'});
 
         res.write('<html><body><p>This is third Page.</p></body></html>');
         res.end();
@@ -33,5 +46,5 @@ var server = http.createServer((req, res) => {
         res.end('Invalid request');
     }
 });
-server.listen(8080);
+server.listen(5000);
 console.log("server running");
